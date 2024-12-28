@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/gamification/db" VERSION="2025122700" COMMENT="Gamification plugin database schema">
+    <TABLES>
+        <TABLE NAME="local_gamification_points" COMMENT="Table to store points for gamification">
+            <FIELDS>
+                <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="Primary key"/>
+                <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="User ID"/>
+                <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Course ID"/>
+                <FIELD NAME="points" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Points earned"/>
+                <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" COMMENT="Timestamp of last modification"/>
+            </FIELDS>
+            <KEYS>
+                <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+            </KEYS>
+            <INDEXES>
+                <INDEX NAME="userid_course_index" UNIQUE="true" FIELDS="userid,courseid"/>
+            </INDEXES>
+        </TABLE>
+    </TABLES>
+</XMLDB>
+
