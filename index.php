@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Gamification dashboard.
+ *
+ * @package   local_gamification
+ */
+
 require_once(__DIR__ . '/../../config.php');
 
 $PAGE->set_url('/local/gamification/index.php');
