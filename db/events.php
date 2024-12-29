@@ -15,4 +15,12 @@ $observers = [
         'eventname' => '\core\event\course_module_completion_updated',
         'callback'  => 'local_gamification_observer::award_points',
     ],
+    [
+        'eventname' => '\mod_forum\event\post_created',
+        'callback'  => 'local_gamification_observer::award_points_for_forum',
+    ],
+    [
+        'eventname' => '\mod_quiz\event\attempt_submitted',
+        'callback'  => 'local_gamification_observer::award_points_for_quiz',
+    ],
 ];

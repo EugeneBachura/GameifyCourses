@@ -25,10 +25,41 @@ class local_gamification_observer
      */
     public static function award_points($event)
     {
+        self::update_points($event->relateduserid, $event->courseid, 'points_task');
+    }
+
+    /**
+     * Award points for forum post creation.
+     *
+     * @param \mod_forum\event\post_created $event
+     */
+    public static function award_points_for_forum($event)
+    {
+        self::update_points($event->userid, $event->courseid, 'points_forum');
+    }
+
+    /**
+     * Award points for quiz submission.
+     *
+     * @param \mod_quiz\event\attempt_submitted $event
+     */
+    public static function award_points_for_quiz($event)
+    {
+        self::update_points($event->userid, $event->courseid, 'points_quiz');
+    }
+
+    /**
+     * Update points for a specific user and course.
+     *
+     * @param int $userid
+     * @param int $courseid
+     * @param string $configkey
+     */
+    private static function update_points($userid, $courseid, $configkey)
+    {
         global $DB;
 
-        $userid = $event->relateduserid;
-        $courseid = $event->courseid;
+        $points = get_config('local_gamification', $configkey);
 
         $record = $DB->get_record('local_gamification_points', [
             'userid' => $userid,
@@ -36,19 +67,20 @@ class local_gamification_observer
         ]);
 
         if ($record) {
-            $record->points += 10;
+            $record->points += $points;
             $record->timemodified = time();
             $DB->update_record('local_gamification_points', $record);
         } else {
             $DB->insert_record('local_gamification_points', [
                 'userid' => $userid,
                 'courseid' => $courseid,
-                'points' => 10,
+                'points' => $points,
                 'timemodified' => time(),
             ]);
         }
     }
 }
+
 
 /**
  * Extends the course settings navigation with the Gamification link.
