@@ -13,6 +13,14 @@ defined('MOODLE_INTERNAL') || die();
 $observers = [
     [
         'eventname' => '\core\event\course_module_completion_updated',
-        'callback'  => 'local_gamification_observer::award_points',
+        'callback'  => '\local_gamification\event\observer\completion::handle',
+    ],
+    [
+        'eventname' => '\mod_forum\event\post_created',
+        'callback'  => '\local_gamification\event\observer\forum::handle',
+    ],
+    [
+        'eventname' => '\mod_quiz\event\attempt_submitted',
+        'callback'  => '\local_gamification\event\observer\quiz::handle',
     ],
 ];
