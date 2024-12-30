@@ -1,4 +1,4 @@
- Gamification Plugin for Moodle
+# Gamification Plugin for Moodle
 
 **Gamification** is a plugin for Moodle (version 4.5+). It helps to increase student engagement by giving points for activities in a course.
 
