@@ -12,4 +12,4 @@
 
 1. Download the plugin or clone this repository:
    ```bash
-   git clone https://github.com/your-repository-url.git local/gamification
+   git clone https://github.com/EugeneBachura/GameifyCourses.git local/gamification
