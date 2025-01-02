@@ -1,0 +1,100 @@
+#page.drawers div[role="main"] {
+    max-width: 830px;
+    margin: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    gap: 20px
+}
+
+.user-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+
+.user-details {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        gap: 30px;
+}
+
+.circle-avatar {
+    border-radius: 50%;
+}
+
+.user-level {
+    margin: 0;
+}
+
+.progress-bar {
+    border-radius: .5rem;
+}
+
+.progress-points {
+    font-weight: 600;
+}
+
+/* badges */
+.user-badges {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    gap: 5px;
+}
+
+.badges-block {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 15px;
+}
+
+.badge-container {
+    text-align: center;
+    max-width: 100px;
+    cursor: pointer !important;
+}
+
+.badge-image {
+    width: 100%;
+    max-width: 50px;
+    height: auto;
+    border-radius: 50%;
+    -webkit-transition: -webkit-transform 0.3s ease;
+    transition: -webkit-transform 0.3s ease;
+    -o-transition: transform 0.3s ease;
+    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+
+.badge-container:hover .badge-image {
+    -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+            transform: scale(1.1);
+}
+
+.badge-name {
+    margin-top: 10px;
+    font-size: 14px;
+}
