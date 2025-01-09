@@ -40,4 +40,5 @@ If you have issues, please contact Eugene Bachura at eugene.bachura@gmail.com
 ## Screenshots
 ![image](https://github.com/user-attachments/assets/b0630416-b76b-4ac4-be72-2c44448d5899)
 ![image](https://github.com/user-attachments/assets/7f36d4a5-8228-41c2-87e1-6804ad43ce2f)
+![image](https://github.com/user-attachments/assets/a5ba9829-eaab-470f-ba93-60e0ba6f8e1b)
 
