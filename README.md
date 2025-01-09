@@ -2,11 +2,25 @@
 
 **Gamification** is a plugin for Moodle. It helps to increase student engagement by giving points for activities in a course.
 
-## Features
+## Currently Implemented Features:
 
-- Points for completing tasks, forum posts, and quizzes
-- View your points on the course dashboard
-- Easy to configure in the Moodle admin panel
+### Points and Levels System:
+- Points are awarded for completing tasks, participating in forums, and submitting quizzes.
+- Points are stored in the database and can be viewed by the user.
+- Levels are calculated based on the total points earned by the user.
+- A dynamic progress bar shows how close the user is to the next level.
+
+### Badges:
+- Users can earn badges for specific achievements in the course.
+- Badges are displayed on the dashboard if available.
+
+### Leaderboard:
+- A leaderboard is displayed on the dashboard showing the top users in the course based on points.
+- The leaderboard currently shows data for all time.
+
+### Localization and Theme Compatibility:
+- All texts are stored in a language file, making the plugin multilingual-ready.
+- The plugin uses Moodle's standard CSS classes for styling, ensuring compatibility with different themes.
 
 ## Installation
 
@@ -22,3 +36,8 @@ Moodle version: 4.0 or later
 
 ## Support
 If you have issues, please contact Eugene Bachura at eugene.bachura@gmail.com
+
+## Screenshots
+![image](https://github.com/user-attachments/assets/b0630416-b76b-4ac4-be72-2c44448d5899)
+![image](https://github.com/user-attachments/assets/7f36d4a5-8228-41c2-87e1-6804ad43ce2f)
+
