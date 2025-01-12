@@ -16,7 +16,12 @@
 
 ### Leaderboard:
 - A leaderboard is displayed on the dashboard showing the top users in the course based on points.
-- The leaderboard currently shows data for all time.
+- The leaderboard includes filters to view data for all time, the past month, or the past week.
+
+### Customization Options:
+- Administrators can configure the number of points awarded for completing tasks, forum posts, and quizzes.
+- Settings allow administrators to enable or disable the leaderboard display.
+- Settings also allow administrators to enable or disable the badges display.
 
 ### Localization and Theme Compatibility:
 - All texts are stored in a language file, making the plugin multilingual-ready.
@@ -32,7 +37,7 @@
 
 ## Requirements
 
-Moodle version: 4.0 or later
+Moodle version: 4.3 or later
 
 ## Support
 If you have issues, please contact Eugene Bachura at eugene.bachura@gmail.com
@@ -40,5 +45,6 @@ If you have issues, please contact Eugene Bachura at eugene.bachura@gmail.com
 ## Screenshots
 ![image](https://github.com/user-attachments/assets/b0630416-b76b-4ac4-be72-2c44448d5899)
 ![image](https://github.com/user-attachments/assets/2bdddf45-5284-4a53-a4ee-fff2208a3995)
-![image](https://github.com/user-attachments/assets/a5ba9829-eaab-470f-ba93-60e0ba6f8e1b)
+![image](https://github.com/user-attachments/assets/dda0ae16-99a4-465f-a292-675a72dcdab1)
+
 
