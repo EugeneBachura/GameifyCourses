@@ -37,5 +37,19 @@ if ($hassiteconfig) {
         PARAM_INT
     ));
 
+    $settings->add(new admin_setting_configcheckbox(
+        'local_gamification/show_leaderboard',
+        get_string('show_leaderboard', 'local_gamification'),
+        get_string('show_leaderboard_desc', 'local_gamification'),
+        1
+    ));
+
+    $settings->add(new admin_setting_configcheckbox(
+        'local_gamification/show_badges',
+        get_string('show_badges', 'local_gamification'),
+        get_string('show_badges_desc', 'local_gamification'),
+        1
+    ));
+
     $ADMIN->add('localplugins', $settings);
 }
