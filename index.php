@@ -10,7 +10,8 @@ require_once(__DIR__ . '/../../config.php');
 
 use local_gamification\output\renderer;
 
-$courseid = optional_param('courseid', null, PARAM_INT);
+$timeframe = optional_param('timeframe', 'alltime', PARAM_ALPHANUMEXT);
+$courseid  = optional_param('courseid', null, PARAM_INT);
 
 if (!$courseid) {
     echo $OUTPUT->header();
@@ -37,21 +38,20 @@ $PAGE->set_heading($course->fullname);
 
 $PAGE->requires->css('/local/gamification/styles/styles.css');
 
-global $USER;
+global $USER, $CFG, $DB;
 
 $points = $DB->get_field('local_gamification_points', 'points', [
-    'userid' => $USER->id,
+    'userid'   => $USER->id,
     'courseid' => $courseid,
 ]) ?: 0;
 
 $level = floor(sqrt($points));
 $currentLevelPoints = pow($level, 2);
-$nextLevelPoints = pow($level + 1, 2);
-$progress = $points - $currentLevelPoints;
-$progressNeeded = $nextLevelPoints - $currentLevelPoints;
-$progressPercent = $progressNeeded > 0 ? ($progress / $progressNeeded) * 100 : 100;
+$nextLevelPoints    = pow($level + 1, 2);
+$progress           = $points - $currentLevelPoints;
+$progressNeeded     = $nextLevelPoints - $currentLevelPoints;
+$progressPercent    = $progressNeeded > 0 ? ($progress / $progressNeeded) * 100 : 100;
 
-global $CFG;
 $badges = [];
 $sql = "SELECT b.*, bi.dateissued, bi.dateexpire
           FROM {badge} b
@@ -86,42 +86,90 @@ foreach ($userbadges as $badge) {
     }
 
     $badges[] = [
-        'name' => $badge->name,
+        'name'        => $badge->name,
         'description' => $badge->description,
-        'imageurl' => $badgeimageurl,
+        'imageurl'    => $badgeimageurl,
     ];
 }
 
+$timeconditions = '';
+$params = ['courseid' => $courseid];
 
-$sql = "SELECT u.firstname, u.lastname, p.points
+if ($timeframe === 'week') {
+    $timeconditions     = 'AND p.timemodified >= :weekstart';
+    $params['weekstart'] = strtotime('-1 week');
+} elseif ($timeframe === 'month') {
+    $timeconditions      = 'AND p.timemodified >= :monthstart';
+    $params['monthstart'] = strtotime('-1 month');
+}
+
+$sql = "SELECT u.id, u.firstname, u.lastname, p.points
           FROM {user} u
           JOIN {local_gamification_points} p ON u.id = p.userid
          WHERE p.courseid = :courseid
-      ORDER BY p.points DESC";
-$params = ['courseid' => $courseid];
-$leaderboard = $DB->get_records_sql($sql, $params);
+               $timeconditions
+      ORDER BY p.points DESC
+       LIMIT 20";
+$leaderboardrecords = $DB->get_records_sql($sql, $params);
 
 $leaderboardData = [];
-foreach ($leaderboard as $record) {
+$userInTop20 = false;
+
+foreach ($leaderboardrecords as $index => $record) {
     $leaderboardData[] = [
-        'name' => $record->firstname . ' ' . $record->lastname,
+        'id'     => $record->id,
+        'name'   => $record->firstname . ' ' . $record->lastname,
         'points' => $record->points,
+    ];
+    if ((int)$record->id === (int)$USER->id) {
+        $userInTop20 = true;
+    }
+}
+
+$userRank = null;
+if (!$userInTop20) {
+    $sql = "SELECT COUNT(*) + 1 AS userrank
+              FROM {local_gamification_points} p
+             WHERE p.courseid = :courseid
+                   {$timeconditions}
+               AND p.points > (
+                   SELECT points
+                     FROM {local_gamification_points}
+                    WHERE userid = :userid
+                      AND courseid = :courseid2
+               )";
+
+    $params['userid']    = $USER->id;
+    $params['courseid2'] = $courseid;
+    $userRank = $DB->get_field_sql($sql, $params);
+
+    $leaderboardData[] = [
+        'id'     => $USER->id,
+        'rank'   => (int)$userRank,
+        'name'   => fullname($USER) . ' (' . get_string('yourplace', 'local_gamification') . ')',
+        'points' => $points,
     ];
 }
 
 $data = [
-    'avatar' => new moodle_url('/user/pix.php/' . $USER->id . '/f1.jpg'),
-    'fullname' => fullname($USER),
-    'status_icon' => $USER->lastaccess > time() - 300 ? '<span class="status online"></span>' : '<span class="status offline"></span>',
-    'level' => $level,
-    'points' => $points,
-    'progress' => $progressPercent,
+    'avatar'       => new moodle_url('/user/pix.php/' . $USER->id . '/f1.jpg'),
+    'fullname'     => fullname($USER),
+    'status_icon'  => $USER->lastaccess > time() - 300
+        ? '<span class="status online"></span>'
+        : '<span class="status offline"></span>',
+    'level'        => $level,
+    'points'       => $points,
+    'progress'     => $progressPercent,
     'progress_text' => "{$progress} / {$progressNeeded}",
-    'badges' => $badges,
-    'leaderboard' => $leaderboardData,
+    'badges'       => $badges,
+    'leaderboard'  => $leaderboardData,
+    'courseid'     => $courseid,
+    'timeframe'    => $timeframe,
+    'currentuserid' => $USER->id,
 ];
 
 $renderer = $PAGE->get_renderer('local_gamification');
+
 echo $OUTPUT->header();
 echo $renderer->render_dashboard($data);
 echo $OUTPUT->footer();
