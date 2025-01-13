@@ -30,3 +30,7 @@ $string['week'] = 'This week';
 $string['month'] = 'This month';
 $string['yourplace'] = 'Your place';
 $string['filterinactiveusers'] = '* Only users who have updated points within the selected timeframe are displayed.';
+$string['show_leaderboard'] = 'Show leaderboard';
+$string['show_leaderboard_desc'] = 'Enable or disable the display of the leaderboard on the course dashboard.';
+$string['show_badges'] = 'Show badges';
+$string['show_badges_desc'] = 'Enable or disable the display of user badges on the course dashboard.';
